@@ -27,7 +27,7 @@ using std::endl;
 MyADT::MyADT() {
     for(int alph = 0; alph < MAX_ALPHA; alph++)
     {
-      elements[alph] = new Profile[5];
+      elements[alph] = new Profile[MAX_ELEMENTS];
       elementCount[alph] = 0;
     }
 }  // end default constructor
@@ -37,11 +37,12 @@ MyADT::MyADT() {
 MyADT::MyADT(const MyADT& rhs) {
     for(int alph = 0; alph < MAX_ALPHA; alph++)
     {
-      elementCount[alph] = rhs->elementCount[alph];
-      for(int i = 0; i < MAX_ELEMENTS; i++)
+      elementCount[alph] = rhs.elementCount[alph];
+      // Deep copy each element (?)
+      elements[alph] = new Profile[MAX_ELEMENTS];
+      for(int i = 0; i < elementCount[alph]; i++)
       {
-         Profile *nP = rhs->elements[alph][i];
-         elements[alph][i] = new *Profile(nP->aUsername,nP->aName,np->nP->anEmail,nP->aBirthday);
+         elements[alph][i] = rhs.elements[alph][i];
       }
     }
 }  // end copy constructor
