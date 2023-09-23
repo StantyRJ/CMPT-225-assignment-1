@@ -25,38 +25,35 @@ using std::endl;
     
 // Default constructor.
 MyADT::MyADT() {
-    MyADT *newADT = new MyADT; 
-    for(int alph = 0; alph < newADT->MAX_ALPHA; alph++)
+    for(int alph = 0; alph < MAX_ALPHA; alph++)
     {
-        for(int i = 0; i < newADT->MAX_ALPHA; i++)
-        {
-            elements[alph][i] = new Profile;
-        }
+      elements[alph] = new Profile[5];
+      elementCount[alph] = 0;
     }
 }  // end default constructor
 
 
 // Copy constructor - Covered in Lab 3
 MyADT::MyADT(const MyADT& rhs) {
-
-    MyADT *newADT = new MyADT;
-    for(int alph = 0; alph < newADT->MAX_ALPHA; alph++)
+    for(int alph = 0; alph < MAX_ALPHA; alph++)
     {
-        for(int i = 0; i < newADT->MAX_ALPHA; i++)
-        {
-            elements[alph][i] = 
-        }
+      elementCount[alph] = rhs->elementCount[alph];
+      for(int i = 0; i < MAX_ELEMENTS; i++)
+      {
+         Profile *nP = rhs->elements[alph][i];
+         elements[alph][i] = new *Profile(nP->aUsername,nP->aName,np->nP->anEmail,nP->aBirthday);
+      }
     }
-
 }  // end copy constructor
 
 
 // Destructor
 // Description: Destruct this object, releasing heap-allocated memory.
 MyADT::~MyADT() {
-
-   /* Put your code here */
-
+    for(int alph = 0; alph < MAX_ALPHA; alph++)
+    {
+      delete [] elements[alph];
+    }
 } // end destructor
 
 // Description: Returns the total element count of elements currently stored in MyADT.
