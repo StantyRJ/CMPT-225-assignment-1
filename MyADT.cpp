@@ -51,17 +51,18 @@ MyADT::MyADT(const MyADT& rhs) {
 // Destructor
 // Description: Destruct this object, releasing heap-allocated memory.
 MyADT::~MyADT() {
-    for(int alph = 0; alph < MAX_ALPHA; alph++)
-    {
+   for(int alph = 0; alph < MAX_ALPHA; alph++)
+   {
       delete [] elements[alph];
-    }
+   }
 } // end destructor
 
 // Description: Returns the total element count of elements currently stored in MyADT.
 unsigned int MyADT::getElementCount() const {
-
-   /* Put your code here */
-
+   unsigned int total = 0;
+   for(int i = 0; i < MAX_ALPHA; i++)
+      total += elementCount[i];
+   return total;
 }  // end getElementCount
 
 
@@ -71,9 +72,26 @@ unsigned int MyADT::getElementCount() const {
 //                Returns "true" when the insertion is successfull,
 //                otherwise "false".
 bool MyADT::insert(const Profile& newElement) {
+   int pos = (int) newElement.getUserName()[0];
+   if(pos > 90)
+      pos -= 97;
+   else
+      pos -= 65;
 
-   /* Put your code here */
+   if(elementCount[pos] >= MAX_ELEMENTS)
+   {
+      std::cout << "There are too many profiles starting with the letter " << newElement.getUserName()[0];
+      return false;
+   }
 
+   for(int i = 0; i < elementCount[pos]; i++)
+   {
+      if(elements[pos][i] == newElement)
+         return false;
+   }
+   elements[pos][elementCount[pos]] = newElement;
+   elementCount[pos] ++;
+   return true;
 }  // end insert
 
 
@@ -81,8 +99,19 @@ bool MyADT::insert(const Profile& newElement) {
 //              Returns a pointer to the element if found,
 //              otherwise, returns nullptr.
 Profile* MyADT::search(const Profile& target) {
+   int pos = (int) target.getUserName()[0];
+   if(pos > 90)
+      pos -= 97;
+   else
+      pos -= 65;
+      
+   for(int i = 0; i < elementCount[pos]; i++)
+   {
+      if(elements[pos][i] == target)
+         return &elements[pos][i];
+   }   
 
-   /* Put your code here */
+   return nullptr;
 
 }  // end of search
 
@@ -91,26 +120,48 @@ Profile* MyADT::search(const Profile& target) {
 //                Returns "true" when the removal is successfull,
 //                otherwise "false".
 bool MyADT::remove(const Profile& toBeRemoved) {
+   int pos = (int) toBeRemoved.getUserName()[0];
+   if(pos > 90)
+      pos -= 97;
+   else
+      pos -= 65;
+      
+   for(int i = 0; i < elementCount[pos]; i++)
+   {
+      if(elements[pos][i] == toBeRemoved)
+      {
+         delete &elements[pos][i];
+         return true;
+      }
+   }   
 
-   /* Put your code here */
-
+   return false;
 }  // end remove
 
 
 // Description: Remove all elements.
 // Postcondition: MyADT goes back to its initialization state.
 void MyADT::removeAll() {
-
-   /* Put your code here */
-
+   for(int alph = 0; alph < MAX_ALPHA; alph++)
+   {
+      delete [] elements[alph];
+      elements[alph] = nullptr;
+      elementCount[alph] = 0;
+   }
 }  // end removeAll
 
 
 // Description: Prints all elements stored in MyADT by ascending order of search key.
 // ***For Testing Purposes - Conceptualy, it is not part of this class.***
 void MyADT::print() {
-
-   /* Put your code here */
+   for(int alph = 0; alph < MAX_ALPHA; alph++)
+   {
+      for(int i = 0; i < elementCount[alph]; i++)
+      {
+         Profile cur = elements[alph][i];
+         cout << "Username: " << cur.getUserName() << " Name: " << cur.getEmail() << " Email: " << cur.getEmail() << " Birthday: " << cur.getBirthday() << endl;
+      }
+   }
 
 } // end of print 
 
