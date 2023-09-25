@@ -24,20 +24,41 @@ using std::endl;
 
 
 void join(MyADT & theMembers) {
-
-   /* Put your code here */
-
+   string username, name, email, birthday;
+   cout << "Enter your username: ";
+   cin >> username;
+   cout << "Enter your name: ";
+   cin >> name;
+   cout << "Enter your email: ";
+   cin >> email;
+   cout << "Enter your birthday (format: MM/DD/YYYY): ";
+   cin >> birthday;
+   Profile *newProfile = new Profile(username,name,email,birthday);
+   bool result = theMembers.insert(*newProfile);
+   if(result)
+      cout << "Profile successfully created" << endl;
+   else
+   {
+      cout << "Try again with a different username" << endl;
+      delete newProfile;
+   }
 }
 
 void leave(MyADT & theMembers) {
-
-   /* Put your code here */
-
+   string username, name, email, birthday;
+   cout << "Enter your username: ";
+   cin >> username;
+   cout << "Enter your name: ";
+   cin >> name;
+   cout << "Enter your email: ";
+   cin >> email;
+   cout << "Enter your birthday (format: MM/DD/YYYY): ";
+   cin >> birthday;
+   Profile *newProfile = new Profile(username,name,email,birthday);
+   theMembers.remove(*newProfile);
 }
 
 void search(MyADT & theMembers) {
-
-   /* Put your code here */
 
 }
 
@@ -48,9 +69,7 @@ void modify(MyADT & theMembers) {
 }
 
 void print(MyADT & theMembers) {
-
-   /* Put your code here */
-
+   theMembers.print();
 }
 
 int main() {
@@ -89,5 +108,6 @@ int main() {
         }
     }
 
-    return 0;
+   delete &members;
+   return 0;
 }
