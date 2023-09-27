@@ -57,6 +57,7 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "files.associations": {
     "numbers": "cpp",
-    "new": "cpp"
+    "new": "cpp",
+    "tuple": "cpp"
   }
 }

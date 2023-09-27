@@ -80,7 +80,7 @@ bool MyADT::insert(const Profile& newElement) {
 
    if(elementCount[pos] >= MAX_ELEMENTS)
    {
-      std::cout << "There are too many profiles starting with the letter " << newElement.getUserName()[0] << " try a different username";
+      cout << "There are too many profiles starting with the letter " << newElement.getUserName()[0] << " try a different username";
       return false;
    }
 
@@ -140,7 +140,10 @@ bool MyADT::remove(const Profile& toBeRemoved) {
    {
       if(elements[pos][i] == toBeRemoved)
       {
-         delete &elements[pos][i];
+         for(int next = i; next < elementCount[pos]-1; next++)
+         {
+            elements[pos][next] = elements[pos][next+1];
+         }
          elementCount[i] --;
          return true;
       }

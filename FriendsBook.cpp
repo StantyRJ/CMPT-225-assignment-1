@@ -22,8 +22,8 @@ using std::ws;
 using std::cin;
 using std::endl;
 
-
-void join(MyADT & theMembers) {
+Profile *makeProfile()
+{
    string username, name, email, birthday;
    cout << "Enter your username: ";
    cin >> username;
@@ -33,7 +33,13 @@ void join(MyADT & theMembers) {
    cin >> email;
    cout << "Enter your birthday (format: MM/DD/YYYY): ";
    cin >> birthday;
-   Profile *newProfile = new Profile(username,name,email,birthday);
+   return new Profile(username,name,email,birthday);
+}
+
+
+void join(MyADT & theMembers) {
+
+   Profile *newProfile = makeProfile();
    bool result = theMembers.insert(*newProfile);
    if(result)
       cout << "Profile successfully created" << endl;
@@ -45,26 +51,18 @@ void join(MyADT & theMembers) {
 }
 
 void leave(MyADT & theMembers) {
-   string username, name, email, birthday;
-   cout << "Enter your username: ";
-   cin >> username;
-   cout << "Enter your name: ";
-   cin >> name;
-   cout << "Enter your email: ";
-   cin >> email;
-   cout << "Enter your birthday (format: MM/DD/YYYY): ";
-   cin >> birthday;
-   Profile *newProfile = new Profile(username,name,email,birthday);
+   Profile *newProfile = makeProfile();
    theMembers.remove(*newProfile);
 }
 
 void search(MyADT & theMembers) {
-
+   Profile *newProfile = makeProfile();
+   cout << theMembers.search(*newProfile);
 }
 
 void modify(MyADT & theMembers) {
 
-   /* Put your code here */
+   /*Put your code here */
 
 }
 
