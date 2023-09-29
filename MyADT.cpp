@@ -173,7 +173,7 @@ void MyADT::print() {
       for(int i = 0; i < elementCount[alph]; i++)
       {
          Profile cur = elements[alph][i];
-         cout << "Username: " << cur.getUserName() << " Name: " << cur.getEmail() << " Email: " << cur.getEmail() << " Birthday: " << cur.getBirthday() << endl;
+         cout << cur.getUserName() << ", " << cur.getEmail() << ", " << cur.getEmail() << ", " << cur.getBirthday() << endl;
       }
    }
 

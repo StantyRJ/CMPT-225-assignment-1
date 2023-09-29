@@ -24,22 +24,24 @@ using std::endl;
 
 Profile *makeProfile()
 {
-   string username, name, email, birthday;
+   string username;
    cout << "Enter your username: ";
+   cin >> username;
+   return new Profile(username);
+}
+
+
+void join(MyADT & theMembers) {
+   string username, name, email, birthday;
+   cout << "Enter your username (only letters allowed): ";
    cin >> username;
    cout << "Enter your name: ";
    cin >> name;
    cout << "Enter your email: ";
    cin >> email;
-   cout << "Enter your birthday (format: MM/DD/YYYY): ";
+   cout << "Enter your birthday: ";
    cin >> birthday;
-   return new Profile(username,name,email,birthday);
-}
-
-
-void join(MyADT & theMembers) {
-
-   Profile *newProfile = makeProfile();
+   Profile *newProfile = new Profile(username,name,email,birthday);
    bool result = theMembers.insert(*newProfile);
    if(result)
       cout << "Profile successfully created" << endl;
@@ -57,12 +59,36 @@ void leave(MyADT & theMembers) {
 
 void search(MyADT & theMembers) {
    Profile *newProfile = makeProfile();
-   cout << theMembers.search(*newProfile);
+   Profile *profileFound = theMembers.search(*newProfile);
+   if(profileFound)
+      cout << "Your friend was found!";
+   else
+      cout << "Your friend was not found.";
 }
 
 void modify(MyADT & theMembers) {
-
-   /*Put your code here */
+   string username, name, email, birthday;
+   cout << "Enter the username of the account you want to edit: ";
+   cin >> username;
+   Profile *newProfile = new Profile(username);
+   Profile *profileFound = theMembers.search(*newProfile);
+   if(profileFound)
+   {
+      cout << "Enter your new name: ";
+      cin >> name;
+      cout << "Enter your new email: ";
+      cin >> email;
+      cout << "Enter your new birthday: ";
+      cin >> birthday;
+      profileFound->setName(name);
+      profileFound->setEmail(email);
+      profileFound->setBirthday(birthday);
+      cout << "Your profile has been updated";
+   }
+   else
+   {
+      cout << "That profile was not found.";
+   }
 
 }
 
