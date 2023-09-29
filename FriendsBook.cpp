@@ -7,8 +7,10 @@
  *
  * ***You cannot remove/change the code provided in this file.***
  *
- * Author: AL
+ * Author: Ryan Hargrave
+ * Student #: 301550214
  * Modified on: Sept. 14, 2023
+ * Last modified on: Sept. 29 2023
  */
 
 #include <iostream>
@@ -22,6 +24,8 @@ using std::ws;
 using std::cin;
 using std::endl;
 
+//Description: asks the user for a username and returns a pointer 
+//             to a new profile with that username
 Profile *makeProfile()
 {
    string username;
@@ -30,7 +34,9 @@ Profile *makeProfile()
    return new Profile(username);
 }
 
-
+//Description: asks the user for username, name, email and birthday
+//             then makes a new profile and inserts it into the ADT
+//             then prints out if the insertion is successful or not
 void join(MyADT & theMembers) {
    string username, name, email, birthday;
    cout << "Enter your username (only letters allowed): ";
@@ -42,21 +48,33 @@ void join(MyADT & theMembers) {
    cout << "Enter your birthday: ";
    cin >> birthday;
    Profile *newProfile = new Profile(username,name,email,birthday);
-   bool result = theMembers.insert(*newProfile);
+
+   if(theMembers)
+      bool result = theMembers.insert(*newProfile);
+
    if(result)
       cout << "Profile successfully created" << endl;
    else
    {
-      cout << "Try again with a different username" << endl;
-      delete newProfile;
+      cout << "Try again with a different username. There may already be a user with that name." << endl;
    }
+   delete newProfile;
 }
 
+//Description: asks the user for a username then 
+//             removes that user from the adt if it is found;
 void leave(MyADT & theMembers) {
    Profile *newProfile = makeProfile();
-   theMembers.remove(*newProfile);
+   bool removed = theMembers.remove(*newProfile);
+   if(removed)
+      cout << "Profile removed." << endl;
+   else
+      cout << "Profile not found." << endl;
+
+   delete newProfile;
 }
 
+//Description: look for the username the user enters and return if they are a member
 void search(MyADT & theMembers) {
    Profile *newProfile = makeProfile();
    Profile *profileFound = theMembers.search(*newProfile);
@@ -64,8 +82,12 @@ void search(MyADT & theMembers) {
       cout << "Your friend was found!";
    else
       cout << "Your friend was not found.";
+
+   delete newProfile;
 }
 
+//Description: search for the username inputed and allow the user
+//             to change the name email and birthday of that user
 void modify(MyADT & theMembers) {
    string username, name, email, birthday;
    cout << "Enter the username of the account you want to edit: ";
@@ -83,14 +105,16 @@ void modify(MyADT & theMembers) {
       profileFound->setName(name);
       profileFound->setEmail(email);
       profileFound->setBirthday(birthday);
-      cout << "Your profile has been updated";
+      cout << "Your profile has been updated" << endl;
    }
    else
    {
-      cout << "That profile was not found.";
+      cout << "That profile was not found." << endl;
    }
+   delete newProfile;
 }
 
+//Description: prints all the members of the ADT
 void print(MyADT & theMembers) {
    theMembers.print();
 }
@@ -130,7 +154,5 @@ int main() {
             default: cout << "Not sure what you mean! Please, try again!" << endl;
         }
     }
-
-   delete &members;
    return 0;
 }
