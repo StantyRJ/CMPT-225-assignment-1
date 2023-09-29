@@ -89,7 +89,6 @@ void modify(MyADT & theMembers) {
    {
       cout << "That profile was not found.";
    }
-
 }
 
 void print(MyADT & theMembers) {

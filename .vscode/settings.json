@@ -58,6 +58,8 @@
   "files.associations": {
     "numbers": "cpp",
     "new": "cpp",
-    "tuple": "cpp"
+    "tuple": "cpp",
+    "iostream": "cpp",
+    "ostream": "cpp"
   }
 }
